@@ -17,12 +17,18 @@ class IncrementBloc extends Bloc<IncrementEvent, IncrementState> {
     IncrementEvent event,
   ) async* {
     if (event is IncrementInitialEvent) {
-      yield IncrementInitialState();
-    } else if (event is IncrementAddEvent) {
-      _incRepository.increment();
+      int inc = await _incRepository.inc;
 
       yield IncrementInitialState(
-        inc: _incRepository.inc,
+        inc: inc,
+      );
+    } else if (event is IncrementAddEvent) {
+      await _incRepository.increment();
+
+      int inc = await _incRepository.inc;
+
+      yield IncrementInitialState(
+        inc: inc,
       );
     }
   }

@@ -1,13 +1,11 @@
+import 'package:app_state_mamagment/repositories/inc_impl_repository.dart';
 import 'package:app_state_mamagment/screens/profile_screen.dart';
 import 'package:app_state_mamagment/services/increment/increment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
-  final List<String> items; 
-
-
-  const HomeScreen({Key? key, required this.items,}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -15,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _inc = 0;
+  IncImplRespository _incImplRespository = IncImplRespository(firestore: null);
 
   @override
   void initState() {
@@ -84,6 +83,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text("Profile"),
                   ),
                 ),
+                ListView.builder(
+                  itemCount: _incImplRespository.getProduct().length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(_incImplRespository.getProduct()[index].title),
+                  ),
+                )
               ],
             ),
           ),
